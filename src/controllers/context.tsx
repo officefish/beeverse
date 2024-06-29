@@ -13,7 +13,7 @@ import { createClient } from '@/utils/supabase/client';
 
 import { 
 	//getUsersByReferral, 
-	updateUserStats 
+	//updateUserStats 
 } from '@/services/network/AxiosService';
 
 import { SupabaseClient } from '@supabase/supabase-js';
@@ -116,7 +116,7 @@ export function ContextProvider({ children }: React.PropsWithChildren) {
 	React.useEffect(() => {
 		if (!user) return;
 
-		updateUserStats(user);
+		//updateUserStats(user);
 		
     }, [supabase, user]);
     

@@ -212,7 +212,7 @@ export default function Home() {
 
 		await Promise.all([
 			fetchRanksData(sessionPlayer),
-			fetchUserInteraction(sessionPlayer)
+			//fetchUserInteraction(sessionPlayer)
 		]);
 
 		setStateUser(sessionPlayer);

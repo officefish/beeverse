@@ -321,32 +321,32 @@ export async function updateUserBonus(
 }
 
 // Update user data by ID
-export async function updateUserStats(
-	user: Tables<'users'>,
-) {
-    const data = { user }
-    const route = 'user/stats'
+// export async function updateUserStats(
+// 	user: Tables<'users'>,
+// ) {
+//     const data = { user }
+//     const route = 'user/stats'
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization':`Bearer ${localStorage.getItem('token')}`
-    }
-    const withCredentials = true
+//     const headers = {
+//         'Content-Type': 'application/json',
+//         'Authorization':`Bearer ${localStorage.getItem('token')}`
+//     }
+//     const withCredentials = true
 
-    const options = {
-        headers,
-        withCredentials,
-    }
+//     const options = {
+//         headers,
+//         withCredentials,
+//     }
 
-   const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
-   const { responseData, error } = await axios
-        .put(url, data, options)
-        .then((response) => response.data)
-        .catch((error) => error)
+//    const protocol = 'https'
+//    const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+//    const { responseData, error } = await axios
+//         .put(url, data, options)
+//         .then((response) => response.data)
+//         .catch((error) => error)
 
-    return responseData
-}
+//     return responseData
+// }
 
 
 // Fetch player data from 'Players' table
