@@ -4,5 +4,5 @@ export interface AuthResponse {
     message: string;
     accessToken: string;
     refreshToken: string;
-    user: player
+    player: player;
 }

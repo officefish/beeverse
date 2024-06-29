@@ -93,6 +93,33 @@ export async function getUserTelegramId(
    return responseData
 }
 
+export async function getSessionPlayer() : Promise<User | null> {
+    
+    const data = {}
+    const route = `player/me`
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization':`Bearer ${localStorage.getItem('token')}`
+    }
+    const withCredentials = true
+
+    const options = {
+        headers,
+        withCredentials,
+        data
+    }
+
+   const protocol = 'https'
+   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const { responseData, error } = await axios
+        .get(url, options)
+        .then((response) => response.data)
+        .catch((error) => error)
+
+   return responseData
+}
+
 // Get users data filtered by referral ID
 export async function getUsersByReferral(
 	referralId: number,

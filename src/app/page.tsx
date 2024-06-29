@@ -11,11 +11,12 @@ import { REWARD_COMMON_REFERRER, REWARD_PREMIUM_REFERRER } from '@/constants';
 import { useTelegramMock } from '@/hooks/useTelegramMock';
 import { 
 	getUsersByReferral,
-	getUserTelegramId,
+	//getUserTelegramId,
 	getRanks,
 	getUserQuests,
 	//getUsers,
 	getTopPlayers,
+	getSessionPlayer,
 	//addUser, 
 	//addJoinUsersQuests,
 	updateUserBonus,
@@ -182,22 +183,40 @@ export default function Home() {
 		if (!tgUser) return;
 
 		const authResponse = await AuthSerive.login(`${tgUser.id}`, tgUser.isPremium || false, tgUser.username || "");
-
 		if (!authResponse) {
 			console.log("LOGIN ERROR");
 			return;
 		}
-
+		console.log(authResponse.data)
 		const accessToken = authResponse.data.accessToken;
-		
 		if (!accessToken) {
 			console.log("Access Token Unknown");
 			return;
 		}
-
 		localStorage.setItem('token', accessToken);
 
-		let sessionPlayer = await getUserTelegramId(tgUser.id);
+		//let sessionPlayer = getUserTelegramId(tgUser.id);
+		const player = authResponse.data.player//await getSessionPlayer()//
+		let sessionPlayer = {
+			balance: player.balance,
+			id: Number(player.id),
+			// lastLogin: player.lastLogin,
+			// lastLogout: player.lastLogout,
+			// levelId: player.levelId,
+			referrer_id: Number(player.referredById),
+			rank_id: Number(player.rankId),
+			id_tg: Number(player.tgId),
+			premium: player.isPremium,
+			username: player.userName,
+			created_at: player.createdAt,
+			// bossStreak: player.bossStreak,
+			// lastBossDate: player.lastBossDate,
+			// referralProfit: player.referralProfit,
+			// farmingDate: player.farmingDate
+			//premium: miniAppData.user?.isPremium || false,
+
+		}
+		//console.log(sessionPlayer)
 		if (!sessionPlayer) return;
 
 		await Promise.all([
