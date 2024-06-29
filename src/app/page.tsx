@@ -6,16 +6,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { InitData, retrieveLaunchParams, useInitData, useMiniApp, User, useViewport } from '@tma.js/sdk-react';
 import { Tables } from '../../types/supabase';
-import { 
-	//addJoinUsersQuests, 
-	//addUser, 
-	//getRanks, 
-	//getUserQuests, 
-	//getUsers, 
-	//getUsersByReferral, 
-	//getUserTelegramId, 
-	//updateUserBonus 
-} from '@/utils/supabase/helpers/db';
+
 import { REWARD_COMMON_REFERRER, REWARD_PREMIUM_REFERRER } from '@/constants';
 import { useTelegramMock } from '@/hooks/useTelegramMock';
 import { 
