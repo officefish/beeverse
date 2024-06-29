@@ -187,14 +187,15 @@ export default function Home() {
 			console.log("LOGIN ERROR");
 			return;
 		}
-		
-		const accessToken = authResponse.data.accessToken;
 
+		const accessToken = authResponse.data.accessToken;
+		
 		if (!accessToken) {
 			console.log("Access Token Unknown");
-			localStorage.setItem('token', accessToken);
 			return;
 		}
+
+		localStorage.setItem('token', accessToken);
 
 		let sessionPlayer = await getUserTelegramId(tgUser.id);
 		if (!sessionPlayer) return;
