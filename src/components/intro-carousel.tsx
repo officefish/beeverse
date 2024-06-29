@@ -11,6 +11,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 import { useRouter } from "next/navigation";
+import { IntroItem } from "../../types/types";
 
 export function IntroCarouselDApi(
   props: {

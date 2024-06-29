@@ -2,16 +2,44 @@ import { Tables } from "../../../types/supabase";
 import { User, Rank, Referral, Quest } from "../../../types/types";
 
 import axios, { AxiosError } from 'axios'
-const HOST = 'ab49-2a02-4780-c-dee4-00-1.ngrok-free.app'
+const HOST = '2118-2a02-4780-c-dee4-00-1.ngrok-free.app'
 const PORT = 80
 // Get users data
-export async function getUsers(
+// export async function getUsers(
+// 	//client: SupabaseClient<Database, "public">,
+// 	from: number,
+// 	to: number
+// ) :Promise<User[] | null>  {
+//     const data = { from, to }
+//     const route = 'telegram/user'
+
+//     const headers = {
+//         'Content-Type': 'application/json',
+//         'Authorization':`Bearer ${localStorage.getItem('token')}`
+//     }
+//     const withCredentials = true
+
+//     const options = {
+//         headers,
+//         withCredentials,
+//         data
+//     }
+
+//    const protocol = 'https'
+//    const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+//    const { responseData, error } = await axios
+//         .get(url, options)
+//         .then((response) => response.data)
+//         .catch((error) => error)
+
+//    return responseData
+// }
+
+export async function getTopPlayers(
 	//client: SupabaseClient<Database, "public">,
-	from: number,
-	to: number
 ) :Promise<User[] | null>  {
-    const data = { from, to }
-    const route = 'telegram/user'
+    const data = {}
+    const route = 'player/top'
 
     const headers = {
         'Content-Type': 'application/json',
@@ -40,8 +68,8 @@ export async function getUserTelegramId(
 	tgId: number
 ) : Promise<User | null> {
     
-    const data = { tgId }
-    const route = 'telegram/user'
+    const data = {}
+    const route = `player/${tgId}`
 
     const headers = {
         'Content-Type': 'application/json',
@@ -121,7 +149,6 @@ export async function getReferralByUserId(
         .catch((error) => error)
 
     return responseData
-
 }
 
 // Get ranks data

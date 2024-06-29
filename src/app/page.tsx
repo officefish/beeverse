@@ -23,11 +23,13 @@ import {
 	getUserTelegramId,
 	getRanks,
 	getUserQuests,
-	getUsers,
-	addUser, 
-	addJoinUsersQuests,
+	//getUsers,
+	getTopPlayers,
+	//addUser, 
+	//addJoinUsersQuests,
 	updateUserBonus,
 } from '@/services/network/AxiosService';
+import AuthSerive from '@/services/AuthService';
 
 export default function Home() {
 
@@ -87,7 +89,8 @@ export default function Home() {
 
 	const fetchUserInteraction = React.useCallback(async (user: Tables<'users'>) => {
 		const [responseLeaders, responseReferrers, responseQuests] = await Promise.all([
-			getUsers(0, 1000),
+			//getUsers(0, 1000), // getTopPlayers -> 
+			getTopPlayers(),
 			getUsersByReferral(user.id),
 			getUserQuests(user.id)
 		]);
@@ -136,49 +139,50 @@ export default function Home() {
 	// 	return await updateUserBonus(supabase, referral.id, rewards.balance);
 	// }, [supabase]);
 
-	const addUserData = React.useCallback(async (miniAppData: InitData, tgUser: User) => {
-		const reward = tgUser.isPremium ? REWARD_PREMIUM_REFERRER : REWARD_COMMON_REFERRER;
-		const userData: { id_tg: number; username: string | null; premium: boolean; balance?: number, referrer_id?: number} = {
-			id_tg: tgUser.id,
-			username: tgUser.username || null,
-			premium: tgUser.isPremium || false,
-		};
-		let sessionUser;
+	// const addUserData = React.useCallback(async (miniAppData: InitData, tgUser: User) => {
+	// 	const reward = tgUser.isPremium ? REWARD_PREMIUM_REFERRER : REWARD_COMMON_REFERRER;
+	// 	const userData: { id_tg: number; username: string | null; premium: boolean; balance?: number, referrer_id?: number} = {
+	// 		id_tg: tgUser.id,
+	// 		username: tgUser.username || null,
+	// 		premium: tgUser.isPremium || false,
+	// 	};
+	// 	let sessionUser;
 
-		if (miniAppData.startParam) {
-			const [_, referralId] = miniAppData.startParam.split('-');
+	// 	if (miniAppData.startParam) {
+	// 		const [_, referralId] = miniAppData.startParam.split('-');
 			
-			//const referralUser = await getUserTelegramId(supabase, +referralId);
-			const referralUser = await getUserTelegramId(+referralId);
+	// 		//const referralUser = await getUserTelegramId(supabase, +referralId);
+	// 		const referralUser = await getUserTelegramId(+referralId);
+	// 		// 
 
-			if (referralUser) {
-				userData.referrer_id = referralUser.id;
-				userData.balance = reward;
+	// 		if (referralUser) {
+	// 			userData.referrer_id = referralUser.id;
+	// 			userData.balance = reward;
 
-				if (await updateUserBonus(referralUser, reward)) {
-					console.log("REWARDS FOR REFERRAL");
+	// 			if (await updateUserBonus(referralUser, reward)) {
+	// 				console.log("REWARDS FOR REFERRAL");
 
-					setStateJustReferred({
-						isNew: true,
-						referralUsername: referralUser.username || "friend",
-						reward: tgUser.isPremium ? 25000 : 5000
-					});
-				}
-			}
+	// 				setStateJustReferred({
+	// 					isNew: true,
+	// 					referralUsername: referralUser.username || "friend",
+	// 					reward: tgUser.isPremium ? 25000 : 5000
+	// 				});
+	// 			}
+	// 		}
 
-			sessionUser = await addUser(userData);
-		}
-		if (!sessionUser) return null;
+	// 		//sessionUser = await addUser(userData);
+	// 	}
+	// 	if (!sessionUser) return null;
 
-		const responseUserQuests = await addJoinUsersQuests(sessionUser.id);
-		if (!responseUserQuests) return null;
+	// 	//const responseUserQuests = await addJoinUsersQuests(sessionUser.id);
+	// 	//if (!responseUserQuests) return null;
 
-		await updateUserBonus(sessionUser, reward);
+	// 	//await updateUserBonus(sessionUser, reward);
 
-		setStateIsNew(true);
+	// 	//setStateIsNew(true);
 
-		return sessionUser;
-	}, [setStateIsNew, setStateJustReferred]);
+	// 	return sessionUser;
+	// }, [setStateJustReferred]);
 
 	const fetchPlayerData = React.useCallback(async (miniAppData: InitData) => {
 		handleTelegramMiniAppEvents();
@@ -186,10 +190,22 @@ export default function Home() {
 		const tgUser = miniAppData.user;
 		if (!tgUser) return;
 
-		let sessionPlayer = await getUserTelegramId(tgUser.id);
-		if (!sessionPlayer) {
-			sessionPlayer = await addUserData(miniAppData, tgUser);
+		const authResponse = await AuthSerive.login(`${tgUser.id}`, tgUser.isPremium || false, tgUser.username || "");
+
+		if (!authResponse) {
+			console.log("LOGIN ERROR");
+			return;
 		}
+		
+		const accessToken = authResponse.data.accessToken;
+
+		if (!accessToken) {
+			console.log("Access Token Unknown");
+			localStorage.setItem('token', accessToken);
+			return;
+		}
+
+		let sessionPlayer = await getUserTelegramId(tgUser.id);
 		if (!sessionPlayer) return;
 
 		await Promise.all([
@@ -201,7 +217,7 @@ export default function Home() {
 		setIsLoading(false);
 
 		handleSessionPlayerLoaded();
-	}, [handleTelegramMiniAppEvents, fetchRanksData, fetchUserInteraction, setStateUser, handleSessionPlayerLoaded, addUserData]);
+	}, [handleTelegramMiniAppEvents, fetchRanksData, fetchUserInteraction, setStateUser, handleSessionPlayerLoaded]);
 
 	React.useEffect(() => {
 		const splashTimeout = setTimeout(() => {

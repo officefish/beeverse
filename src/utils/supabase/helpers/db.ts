@@ -3,39 +3,39 @@ import { Database, Tables } from "../../../../types/supabase";
 
 
 // Get users data
-// export async function getUsers(
-// 	client: SupabaseClient<Database, "public">,
-// 	from: number,
-// 	to: number
-// ) {
-// 	const { data, error } = await client
-//     .from('users')
-//     .select()
-// 	.range(from, to)
-// 	.order('balance', { ascending: false });
+async function getUsers(
+	client: SupabaseClient<Database, "public">,
+	from: number,
+	to: number
+) {
+	const { data, error } = await client
+    .from('users')
+    .select()
+	.range(from, to)
+	.order('balance', { ascending: false });
 
-// 	if (error) {
-// 		console.log(error);
-// 		return
-// 	};
+	if (error) {
+		console.log(error);
+		return
+	};
 
-//     return data;
-// }
+    return data;
+}
 
-// Get user data by telegram ID
-// export async function getUserTelegramId(
-// 	client: SupabaseClient<Database, "public">,
-// 	tgId: number
-// ) {
-// 	const { data, error } = await client
-//     .from('users')
-//     .select()
-// 	.eq('id_tg', tgId);
+//Get user data by telegram ID
+export async function getUserTelegramId(
+	client: SupabaseClient<Database, "public">,
+	tgId: number
+) {
+	const { data, error } = await client
+    .from('users')
+    .select()
+	.eq('id_tg', tgId);
 
-// 	if (error || data.length === 0) return;
+	if (error || data.length === 0) return;
 
-//     return data[0];
-// }
+    return data[0];
+}
 
 // Get users data filtered by referral ID
 // export async function getUsersByReferral(
@@ -102,48 +102,48 @@ import { Database, Tables } from "../../../../types/supabase";
 //     return data[0];
 // }
 
-// Insert user row
-// export async function addUser(
-//     client: SupabaseClient<Database, "public">,
-//     user: { id_tg: number; username: string | null; premium: boolean; balance?: number, referrer_id?: number}
-// ) {
-//     const { data, error: errorPlayers } = await client
-//     .from('users')
-//     .insert({
-// 		...user,
-// 	})
-//     .select();
+//Insert user row
+export async function addUser(
+    client: SupabaseClient<Database, "public">,
+    user: { id_tg: number; username: string | null; premium: boolean; balance?: number, referrer_id?: number}
+) {
+    const { data, error: errorPlayers } = await client
+    .from('users')
+    .insert({
+		...user,
+	})
+    .select();
 
-//     if (errorPlayers || data.length === 0) return;
+    if (errorPlayers || data.length === 0) return;
 
-//     return data[0];
-// }
+    return data[0];
+}
 
 // Insert join users_quests row
-// export async function addJoinUsersQuests(
-//     client: SupabaseClient<Database, "public">,
-//     userId: number
-// ) {
-// 	const { data: quests, error: errorQuests } = await client
-// 	.from('quests')
-// 	.select('id')
-// 	.order('id', { ascending: true });
-// 	if (errorQuests) return;
+export async function addJoinUsersQuests(
+    client: SupabaseClient<Database, "public">,
+    userId: number
+) {
+	const { data: quests, error: errorQuests } = await client
+	.from('quests')
+	.select('id')
+	.order('id', { ascending: true });
+	if (errorQuests) return;
 
-// 	const user_quest: Tables<'users_quests'>[] = quests.map((quest) => ({
-// 		completed: false,
-// 		quest_id: quest.id,
-// 		user_id: userId
-// 	}));
+	const user_quest: Tables<'users_quests'>[] = quests.map((quest) => ({
+		completed: false,
+		quest_id: quest.id,
+		user_id: userId
+	}));
 
-//     const { data: userQuests , error: errorUserQuests } = await client
-//     .from('users_quests')
-//     .insert(user_quest)
-//     .select();
-//     if (errorUserQuests) return;
+    const { data: userQuests , error: errorUserQuests } = await client
+    .from('users_quests')
+    .insert(user_quest)
+    .select();
+    if (errorUserQuests) return;
 
-//     return userQuests;
-// }
+    return userQuests;
+}
 
 // Update user data by ID
 // export async function updateUserBonus(

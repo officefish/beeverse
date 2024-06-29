@@ -6,7 +6,7 @@ import Image from "next/image";
 import React from "react";
 import RankInfoCard from "./rank-info-card";
 import { Tables } from "../../types/supabase";
-import { getRanks } from "@/utils/supabase/helpers/db";
+//import { getRanks } from "@/utils/supabase/helpers/db";
 import { createClient } from "@/utils/supabase/client";
 import RankIcon from "./rank-icon";
 import { useData } from "@/controllers/context";
