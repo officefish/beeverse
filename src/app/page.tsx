@@ -200,21 +200,12 @@ export default function Home() {
 		let sessionPlayer = {
 			balance: player.balance,
 			id: Number(player.id),
-			// lastLogin: player.lastLogin,
-			// lastLogout: player.lastLogout,
-			// levelId: player.levelId,
 			referrer_id: Number(player.referredById),
 			rank_id: Number(player.rankId),
 			id_tg: Number(player.tgId),
 			premium: player.isPremium,
 			username: player.userName,
 			created_at: player.createdAt,
-			// bossStreak: player.bossStreak,
-			// lastBossDate: player.lastBossDate,
-			// referralProfit: player.referralProfit,
-			// farmingDate: player.farmingDate
-			//premium: miniAppData.user?.isPremium || false,
-
 		}
 		//console.log(sessionPlayer)
 		if (!sessionPlayer) return;
