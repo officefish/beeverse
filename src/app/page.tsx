@@ -11,7 +11,7 @@ import { REWARD_COMMON_REFERRER, REWARD_PREMIUM_REFERRER } from '@/constants';
 import { useTelegramMock } from '@/hooks/useTelegramMock';
 import { 
 	getUsersByReferral,
-	//getUserTelegramId,
+	getUserTelegramId,
 	getRanks,
 	getUserQuests,
 	//getUsers,
@@ -198,7 +198,9 @@ export default function Home() {
 		}
 		localStorage.setItem('token', accessToken);
 
-		//let sessionPlayer = getUserTelegramId(tgUser.id);
+		console.log(tgUser.id)
+
+		//let sessionPlayer = await getUserTelegramId(tgUser.id);
 		const player = authResponse.data.player//await getSessionPlayer()//
 		console.log(player)
 		let sessionPlayer = {
@@ -238,7 +240,7 @@ export default function Home() {
 			}
 
 			fetchPlayerData(initData);
-		}, 5000);
+		}, 1000);
 
 		return () => clearTimeout(splashTimeout);
 	}, [fetchPlayerData, initData, user]);

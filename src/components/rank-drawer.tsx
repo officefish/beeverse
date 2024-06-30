@@ -30,7 +30,7 @@ export default function RankDrawer() {
 			<DrawerTrigger
 			onClick={() => setIsOpen(!isOpen)}
 			>
-				<RankIcon name={userRank!.name} url={`/icons/levels/${userRank!.name}.png`} size={64} />
+				{/* <RankIcon name={userRank!.name} url={`/icons/levels/${userRank!.name}.png`} size={64} /> */}
 			</DrawerTrigger>
 			<DrawerContent>
 				<div className="w-full inline-flex items-center justify-end relative">

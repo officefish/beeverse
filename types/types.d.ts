@@ -41,3 +41,14 @@ export type Quest = {
     terms: string;
 }
 
+export type SessionPlayer = {
+    balance: number,
+	id: number,
+    referrer_id: number,
+	rank_id: number,
+	id_tg: number,
+	premium: boolean,
+	username: string | null,
+	created_at: string,
+}
+

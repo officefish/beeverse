@@ -1,5 +1,5 @@
 import { Tables } from "../../../types/supabase";
-import { User, Rank, Referral, Quest } from "../../../types/types";
+import { User, Rank, Referral, Quest, SessionPlayer } from "../../../types/types";
 
 import axios, { AxiosError } from 'axios'
 const HOST = 'cf75-2a02-4780-c-dee4-00-1.ngrok-free.app'
@@ -66,7 +66,7 @@ export async function getTopPlayers(
 // Get user data by telegram ID
 export async function getUserTelegramId(
 	tgId: number
-) : Promise<User | null> {
+) : Promise<SessionPlayer | null> {
     
     const data = {}
     const route = `player/${tgId}`

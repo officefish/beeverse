@@ -29,19 +29,20 @@ export default function Page() {
 		handleNewRank,
 		handlePlayerTap
 	} = useData()!;
-	const isContext = !user || !userRank || !ranks;
+	const isContext = !user // || !userRank || !ranks;
+	//console.log(user, userRank, ranks);
 
 	// Handle coin interaction
 	async function coinInteraction() {
 		if (isContext) return;
 
-		if (user.balance >= (userRank.required_amount - TAP_PROFIT)) {
-			const isLevelUpdated = handleNewRank(userRank);
-			if (!isLevelUpdated) console.log("PLAYER NOT NEW RANK");
-			if (isLevelUpdated) console.log("PLAYER NEW RANK");
-		} else {
-			const isTapDone = handlePlayerTap(TAP_PROFIT);
-		}
+		// if (user.balance >= (userRank.required_amount - TAP_PROFIT)) {
+		// 	const isLevelUpdated = handleNewRank(userRank);
+		// 	if (!isLevelUpdated) console.log("PLAYER NOT NEW RANK");
+		// 	if (isLevelUpdated) console.log("PLAYER NEW RANK");
+		// } else {
+		// 	const isTapDone = handlePlayerTap(TAP_PROFIT);
+		// }
 	}
 
 	if (isContext) return router.replace('/');
@@ -57,7 +58,7 @@ export default function Page() {
 						<div className="w-full inline-flex gap-0.5 items-center justify-between">
 							<HoneyDisplay amount={user.balance} iconSize={24} />
 							<span className="text-xl font-bold text-foreground">/</span>
-							<HoneyDisplay amount={userRank.required_amount} iconSize={24} />
+							<HoneyDisplay amount={0} iconSize={24} />
 							<div className="ml-2">
 								<InfoPopover content={"Honey"} />
 							</div>
