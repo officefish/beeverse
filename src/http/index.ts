@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { config } from 'process'
 
-export const API_URL = 'https://2118-2a02-4780-c-dee4-00-1.ngrok-free.app'
+export const API_URL = 'https://cf75-2a02-4780-c-dee4-00-1.ngrok-free.app'
 
 
 const $api = axios.create({

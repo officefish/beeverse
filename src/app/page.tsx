@@ -66,7 +66,10 @@ export default function Home() {
 
 	const handleSessionPlayerLoaded = React.useCallback(async () => {
 		if (user) {
+			console.log('PUSH TO PLAY');			
 			router.push(isNew ? '/intro' : '/play');
+		} else {
+			console.log('NO USER');
 		}
 	}, [isNew, router, user]);
 
@@ -197,11 +200,12 @@ export default function Home() {
 
 		//let sessionPlayer = getUserTelegramId(tgUser.id);
 		const player = authResponse.data.player//await getSessionPlayer()//
+		console.log(player)
 		let sessionPlayer = {
 			balance: player.balance,
 			id: Number(player.id),
-			referrer_id: Number(player.referredById),
-			rank_id: Number(player.rankId),
+			referrer_id: 0,
+			rank_id: 0,
 			id_tg: Number(player.tgId),
 			premium: player.isPremium,
 			username: player.userName,
@@ -212,13 +216,18 @@ export default function Home() {
 
 		await Promise.all([
 			fetchRanksData(sessionPlayer),
-			//fetchUserInteraction(sessionPlayer)
+			fetchUserInteraction(sessionPlayer)
 		]);
 
 		setStateUser(sessionPlayer);
 		setIsLoading(false);
 
 		handleSessionPlayerLoaded();
+
+		//console.log(user)
+
+		console.log("PLAYER LOADED");
+
 	}, [handleTelegramMiniAppEvents, fetchRanksData, fetchUserInteraction, setStateUser, handleSessionPlayerLoaded]);
 
 	React.useEffect(() => {
@@ -229,7 +238,7 @@ export default function Home() {
 			}
 
 			fetchPlayerData(initData);
-		}, 1000);
+		}, 5000);
 
 		return () => clearTimeout(splashTimeout);
 	}, [fetchPlayerData, initData, user]);

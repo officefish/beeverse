@@ -2,7 +2,7 @@ import { Tables } from "../../../types/supabase";
 import { User, Rank, Referral, Quest } from "../../../types/types";
 
 import axios, { AxiosError } from 'axios'
-const HOST = '2118-2a02-4780-c-dee4-00-1.ngrok-free.app'
+const HOST = 'cf75-2a02-4780-c-dee4-00-1.ngrok-free.app'
 const PORT = 80
 // Get users data
 // export async function getUsers(
@@ -54,7 +54,7 @@ export async function getTopPlayers(
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .get(url, options)
         .then((response) => response.data)
@@ -84,7 +84,7 @@ export async function getUserTelegramId(
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .get(url, options)
         .then((response) => response.data)
@@ -111,7 +111,7 @@ export async function getSessionPlayer() : Promise<User | null> {
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .get(url, options)
         .then((response) => response.data)
@@ -140,7 +140,7 @@ export async function getUsersByReferral(
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .get(url, options)
         .then((response) => response.data)
@@ -169,7 +169,7 @@ export async function getReferralByUserId(
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .get(url, options)
         .then((response) => response.data)
@@ -196,7 +196,7 @@ export async function getRanks() : Promise<Rank[] | null> {
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .get(url, options)
         .then((response) => response.data)
@@ -225,7 +225,7 @@ export async function getUserQuests(
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .get(url, options)
         .then((response) => response.data)
@@ -253,7 +253,7 @@ export async function addUser(
     }
 
    const protocol = 'https'
-   const url = `${protocol}://${HOST}:${PORT}/api/${route}`
+   const url = `${protocol}://${HOST}/api/${route}`
    const { responseData, error } = await axios
         .post(url, data, options)
         .then((response) => response.data)
